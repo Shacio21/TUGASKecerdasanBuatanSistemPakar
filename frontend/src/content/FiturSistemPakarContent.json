@@ -1,0 +1,30 @@
+{
+  "title": "Fitur Unggulan Sistem Pakar",
+  "subtitle": "Didesain untuk mempermudah pemeliharaan mesin industri dengan kecerdasan buatan.",
+  "features": [
+    {
+      "id": 1,
+      "title": "Deteksi Dini Potensi Kerusakan",
+      "description": "Menganalisis pola data untuk mendeteksi tanda-tanda awal kerusakan sebelum terjadi.",
+      "icon": "assets/lottie/detect.json"
+    },
+    {
+      "id": 2,
+      "title": "Rekomendasi Maintenance Otomatis",
+      "description": "Memberikan saran tindakan perawatan yang tepat secara otomatis berdasarkan kondisi mesin.",
+      "icon": "assets/lottie/maintenance.json"
+    },
+    {
+      "id": 3,
+      "title": "Riwayat & Laporan Peralatan",
+      "description": "Menyimpan catatan lengkap aktivitas perawatan dan menampilkan laporan visual.",
+      "icon": "assets/lottie/report.json"
+    },
+    {
+      "id": 4,
+      "title": "Integrasi dengan Sensor Industri",
+      "description": "Terhubung langsung ke sensor IoT untuk pembacaan data real-time mesin industri.",
+      "icon": "assets/lottie/sensor.json"
+    }
+  ]
+}

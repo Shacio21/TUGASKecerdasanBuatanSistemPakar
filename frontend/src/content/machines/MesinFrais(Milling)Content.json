@@ -1,0 +1,16 @@
+{
+    "title": "Mesin Frais (Milling) - Makino PS95",
+    "picture": "machine/mesinfrais.webp",
+    "description": "Makino PS95 adalah mesin milling vertikal berpresisi tinggi yang digunakan untuk pemotongan logam dengan kontrol CNC. Dikenal karena stabilitas strukturalnya dan hasil permukaan yang sangat halus.",
+    "maintenance": [
+      {
+        "title": "Pemeriksaan Harian",
+        "text": "Periksa kebersihan meja kerja, pastikan coolant tidak tercemar, dan cek apakah sistem udara berfungsi dengan baik."
+      },
+      {
+        "title": "Pemeriksaan Mingguan",
+        "text": "Periksa backlash pada sumbu X/Y/Z, bersihkan sistem pendingin spindle, dan pastikan tool changer berjalan tanpa gangguan."
+      }
+    ],
+    "source": "Makino PS-Series Maintenance Guide, Makino Milling Machine Co., Ltd., 2022"
+  }

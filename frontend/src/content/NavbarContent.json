@@ -1,0 +1,9 @@
+{
+  "logo": "Shacio's",
+  "links": [
+    { "label": "Home", "href": "#home" },
+    { "label": "Tentang", "href": "#about" },
+    { "label": "Produk", "href": "#produk" },
+    { "label": "Kontak", "href": "#kontak" }
+  ]
+}

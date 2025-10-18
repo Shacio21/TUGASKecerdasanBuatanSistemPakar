@@ -1,0 +1,16 @@
+{
+    "title": "Mesin Press (Stamping) - AIDA NC1-110",
+    "picture": "machine/mesinpress.webp",
+    "description": "AIDA NC1-110 adalah mesin stamping berkapasitas 110 ton yang digunakan dalam industri otomotif dan manufaktur lembaran logam. Mesin ini menggunakan kontrol digital untuk presisi tinggi dan keamanan operator.",
+    "maintenance": [
+      {
+        "title": "Pemeriksaan Harian",
+        "text": "Pastikan area kerja bebas dari serpihan logam, periksa tekanan hidrolik dan sistem pelumasan utama."
+      },
+      {
+        "title": "Pemeriksaan Mingguan",
+        "text": "Periksa keausan pada die dan punch, kalibrasi sensor posisi slide, serta cek keausan pada bantalan flywheel."
+      }
+    ],
+    "source": "AIDA NC1 Series Maintenance Manual, AIDA Engineering, Ltd., 2021"
+  }

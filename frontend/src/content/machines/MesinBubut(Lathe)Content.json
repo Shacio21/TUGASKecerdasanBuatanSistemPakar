@@ -1,0 +1,17 @@
+{
+    "title": "Mesin Bubut (Lathe) - Haas ST-20",
+    "picture": "machine/mesinbubut.webp",
+    "description": "Mesin bubut Haas ST-20 adalah mesin bubut CNC produksi Amerika Serikat yang digunakan untuk operasi pembubutan presisi tinggi pada logam dan bahan keras lainnya. Mesin ini dilengkapi dengan spindle berkecepatan tinggi dan sistem pendingin otomatis.",
+    "maintenance": [
+      {
+        "title": "Pemeriksaan Harian",
+        "text": "Periksa kondisi chuck, tailstock, dan kebersihan chip tray. Pastikan pelumasan berjalan lancar dan tidak ada getaran berlebih pada spindle."
+      },
+      {
+        "title": "Pemeriksaan Mingguan",
+        "text": "Kalibrasi ulang sumbu X dan Z menggunakan dial indicator. Cek tekanan oli hidrolik dan bersihkan filter pendingin (coolant filter)."
+      }
+    ],
+    "source": "Manual Pemeliharaan Mesin Bubut Haas ST-20, Haas Automation Inc., 2023"
+    
+  }

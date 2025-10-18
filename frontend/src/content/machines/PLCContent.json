@@ -1,0 +1,16 @@
+  {
+    "title": "PLC (Programmable Logic Controller) - Siemens S7-1200",
+    "picture": "machine/plc.webp",
+    "description": "PLC Siemens S7-1200 adalah pengendali logika yang digunakan untuk otomasi mesin industri seperti conveyor, press, dan sistem pabrikasi. PLC ini mendukung komunikasi Ethernet dan modul I/O yang fleksibel.",
+    "maintenance": [
+      {
+        "title": "Pemeriksaan Harian",
+        "text": "Pastikan indikator LED berfungsi normal, tidak ada panas berlebih, dan tegangan input stabil."
+      },
+      {
+        "title": "Pemeriksaan Mingguan",
+        "text": "Backup program PLC menggunakan TIA Portal, bersihkan ventilasi modul, dan periksa koneksi komunikasi antar modul I/O."
+      }
+    ],
+    "source": "Siemens S7-1200 System Manual, Siemens AG, 2024"
+  }
