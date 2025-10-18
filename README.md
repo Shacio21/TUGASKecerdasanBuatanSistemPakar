@@ -7,3 +7,5 @@
 4. Buka **Command Prompt (CMD)** atau Terminal, lalu masuk ke folder project hasil extract.  
    ```bash
    cd nama-folder-project
+   docker-compose up --build
+
