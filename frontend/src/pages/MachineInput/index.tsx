@@ -10,6 +10,11 @@ import {
   Button,
   ResultContainer,
   Recommendation,
+  StepperContainer,
+  StepWrapper,
+  StepCircle,
+  StepLine,
+  StepLabel,
 } from "./style";
 
 interface MaintenanceInput {
@@ -17,9 +22,18 @@ interface MaintenanceInput {
   tailstock_condition: string;
   spindle_vibration: string;
   lubrication_status: string;
-  oil_pressure?: string;
-  coolant_filter?: string;
+  oil_pressure: string;
+  coolant_filter: string;
 }
+
+const steps = [
+  { name: "chuck_condition", label: "Chuck", options: ["baik", "aus"] },
+  { name: "tailstock_condition", label: "Tailstock", options: ["baik", "tidak sejajar"] },
+  { name: "spindle_vibration", label: "Spindle", options: ["tidak ada getaran", "ada getaran"] },
+  { name: "lubrication_status", label: "Pelumasan", options: ["lancar", "tersumbat"] },
+  { name: "oil_pressure", label: "Tekanan Oli", options: ["normal", "rendah"] },
+  { name: "coolant_filter", label: "Filter Pendingin", options: ["bersih", "kotor"] },
+];
 
 const MaintenanceForm: React.FC = () => {
   const [formData, setFormData] = useState<MaintenanceInput>({
@@ -31,6 +45,7 @@ const MaintenanceForm: React.FC = () => {
     coolant_filter: "bersih",
   });
 
+  const [step, setStep] = useState(0);
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -39,11 +54,13 @@ const MaintenanceForm: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const nextStep = () => setStep((s) => Math.min(s + 1, steps.length));
+  const prevStep = () => setStep((s) => Math.max(s - 1, 0));
+
+  const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/evaluate", formData);
+      const res = await axios.post("http://192.168.1.6:8000/evaluate", formData);
       setRecommendations(res.data.rekomendasi);
     } catch (err) {
       console.error(err);
@@ -52,6 +69,8 @@ const MaintenanceForm: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const isLastStep = step === steps.length;
 
   return (
     <SectionContainer>
@@ -63,57 +82,89 @@ const MaintenanceForm: React.FC = () => {
         Sistem Evaluasi Maintenance
       </motion.h2>
 
-      <motion.form
-        onSubmit={handleSubmit}
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <FormCard>
-          <FormTitle>Form Pemeriksaan Mesin</FormTitle>
+      {/* 🔹 Card utama berisi Stepper + Form */}
+      <FormCard>
+        {/* 🔹 Stepper di dalam card */}
+        <StepperContainer>
+          {steps.map((s, i) => (
+            <StepWrapper key={i}>
+              <StepCircle
+                active={i === step}
+                completed={i < step}
+                onClick={() => setStep(i)}
+              >
+                {i < step ? "✔" : i + 1}
+              </StepCircle>
+              {i < steps.length - 1 && <StepLine completed={i < step - 0} />}
+              <StepLabel active={i === step}>{s.label}</StepLabel>
+            </StepWrapper>
+          ))}
+        </StepperContainer>
 
-          <Label>Kondisi Chuck:</Label>
-          <Select name="chuck_condition" onChange={handleChange}>
-            <option value="baik">Baik</option>
-            <option value="aus">Aus</option>
-          </Select>
+        {/* 🔹 Isi form atau konfirmasi */}
+        <AnimatePresence mode="wait">
+          {!isLastStep ? (
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.4 }}
+            >
+              <FormTitle>Langkah {step + 1} dari {steps.length}</FormTitle>
+              <Label>{steps[step].label}:</Label>
+              <Select
+                name={steps[step].name}
+                value={(formData as any)[steps[step].name]}
+                onChange={handleChange}
+              >
+                {steps[step].options.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </Select>
 
-          <Label>Kondisi Tailstock:</Label>
-          <Select name="tailstock_condition" onChange={handleChange}>
-            <option value="baik">Baik</option>
-            <option value="tidak sejajar">Tidak Sejajar</option>
-          </Select>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
+                <Button type="button" onClick={prevStep} disabled={step === 0}>
+                  Sebelumnya
+                </Button>
+                <Button type="button" onClick={nextStep}>
+                  Selanjutnya
+                </Button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="submit-step"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              <FormTitle>Konfirmasi & Kirim</FormTitle>
+              <ul style={{ textAlign: "left", color: "#bcd3ff", fontSize: "0.9rem" }}>
+                {Object.entries(formData).map(([key, value]) => (
+                  <li key={key}>
+                    <strong>{key.replace("_", " ")}:</strong> {value}
+                  </li>
+                ))}
+              </ul>
 
-          <Label>Getaran Spindle:</Label>
-          <Select name="spindle_vibration" onChange={handleChange}>
-            <option value="tidak ada getaran">Tidak Ada Getaran</option>
-            <option value="ada getaran">Ada Getaran</option>
-          </Select>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
+                <Button type="button" onClick={prevStep}>
+                  Kembali
+                </Button>
+                <Button type="button" onClick={handleSubmit} disabled={loading}>
+                  {loading ? "Memproses..." : "Kirim Evaluasi"}
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </FormCard>
 
-          <Label>Pelumasan:</Label>
-          <Select name="lubrication_status" onChange={handleChange}>
-            <option value="lancar">Lancar</option>
-            <option value="tersumbat">Tersumbat</option>
-          </Select>
-
-          <Label>Tekanan Oli:</Label>
-          <Select name="oil_pressure" onChange={handleChange}>
-            <option value="normal">Normal</option>
-            <option value="rendah">Rendah</option>
-          </Select>
-
-          <Label>Filter Pendingin:</Label>
-          <Select name="coolant_filter" onChange={handleChange}>
-            <option value="bersih">Bersih</option>
-            <option value="kotor">Kotor</option>
-          </Select>
-
-          <Button type="submit" disabled={loading}>
-            {loading ? "Memproses..." : "Evaluasi Sekarang"}
-          </Button>
-        </FormCard>
-      </motion.form>
-
+      {/* 🔹 Hasil rekomendasi di luar card */}
       <AnimatePresence>
         {recommendations.length > 0 && (
           <ResultContainer

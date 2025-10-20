@@ -110,3 +110,96 @@ export const Recommendation = styled.p`
   text-align: left;
   font-size: 0.95rem;
 `;
+
+export const ProgressBarContainer = styled.div`
+  max-width: 600px;
+  margin: 0 auto 1.5rem auto;
+  text-align: center;
+`;
+
+export const ProgressTrack = styled.div`
+  background: #1e293b;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+export const ProgressFill = styled.div`
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  height: 100%;
+  border-radius: 10px;
+`;
+
+export const StepIndicator = styled.div<{ active?: boolean }>`
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: ${({ active }) => (active ? "#3b82f6" : "#334155")};
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+`;
+
+// 🔹 Stepper Container Style
+export const StepperContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+  max-width: 600px;
+`;
+
+export const StepWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+`;
+
+export const StepCircle = styled.div<{ active?: boolean; completed?: boolean }>`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: ${({ completed, active }) =>
+    completed ? "#6d28d9" : active ? "#7c3aed" : "#1e293b"};
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+export const StepLine = styled.div<{ completed?: boolean }>`
+  position: absolute;
+  top: 14px;
+  left: 100%;
+  width: 50px;
+  height: 3px;
+  background: ${({ completed }) => (completed ? "#7c3aed" : "#334155")};
+  z-index: 1;
+  transition: background 0.3s ease;
+
+  @media (max-width: 600px) {
+    width: 30px;
+  }
+`;
+
+export const StepLabel = styled.span<{ active?: boolean }>`
+  margin-top: 0.5rem;
+  color: ${({ active }) => (active ? "#a78bfa" : "#94a3b8")};
+  font-size: 0.85rem;
+  font-weight: ${({ active }) => (active ? "600" : "500")};
+`;
