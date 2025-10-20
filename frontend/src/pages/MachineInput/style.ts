@@ -8,57 +8,91 @@ export const SectionContainer = styled.section`
   min-height: 100vh;
 
   h2 {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     font-weight: 700;
+    color: #38bdf8;
     margin-bottom: 40px;
-    color: #3b86e7;
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 15px;
+
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+    }
   }
 `;
 
 export const FormCard = styled.div`
   background: #162032;
   border-radius: 18px;
-  max-width: 600px;
+  max-width: 650px;
   margin: 0 auto;
   padding: 2rem;
   box-shadow: 0 6px 25px rgba(59, 134, 231, 0.25);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  transition: all 0.3s ease;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 35px rgba(59, 134, 231, 0.35);
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+    max-width: 100%;
+    border-radius: 12px;
   }
 `;
 
 export const FormTitle = styled.h3`
-  text-align: center;
   color: #5aa0ff;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 export const Label = styled.label`
   font-weight: 600;
   color: #bcd3ff;
   text-align: left;
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
 `;
 
-export const Select = styled.select`
+export const Input = styled.input`
+  width: 100%;
   padding: 0.6rem;
-  border: 1px solid #2b3b52;
   border-radius: 8px;
+  border: 1px solid #2b3b52;
   background: #1e293b;
   color: #eaf3ff;
-  font-size: 0.95rem;
   outline: none;
   transition: 0.3s;
 
   &:focus {
-    border-color: #3b86e7;
-    background: #25344a;
+    border-color: #38bdf8;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+`;
+
+export const Select = styled.select`
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #2b3b52;
+  background: #1e293b;
+  color: #eaf3ff;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -70,7 +104,6 @@ export const Button = styled.button`
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 1rem;
   margin-top: 1rem;
   transition: all 0.3s ease;
 
@@ -83,13 +116,19 @@ export const Button = styled.button`
     background: #475569;
     cursor: not-allowed;
   }
+
+  @media (max-width: 768px) {
+    width: 48%;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 `;
 
 export const ResultContainer = styled.div`
   margin-top: 2rem;
   background: #1e293b;
   border-radius: 12px;
-  max-width: 600px;
+  max-width: 650px;
   margin-inline: auto;
   padding: 1.5rem;
   box-shadow: 0 6px 15px rgba(59, 134, 231, 0.25);
@@ -98,108 +137,121 @@ export const ResultContainer = styled.div`
     color: #5aa0ff;
     margin-bottom: 1rem;
   }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
 `;
 
-export const Recommendation = styled.p`
-  background: #0f766e;
-  color: #e0f2f1;
-  padding: 0.8rem;
+export const RecommendationCard = styled.div<{ severity?: string }>`
+  background: ${({ severity }) =>
+    severity === "critical"
+      ? "#b91c1c"
+      : severity === "warning"
+      ? "#92400e"
+      : "#0f766e"};
+  color: #f1f5f9;
+  padding: 0.9rem;
   border-radius: 8px;
-  margin-bottom: 0.6rem;
-  border-left: 4px solid #14b8a6;
+  margin-bottom: 0.7rem;
   text-align: left;
-  font-size: 0.95rem;
+  border-left: 5px solid
+    ${({ severity }) =>
+      severity === "critical"
+        ? "#ef4444"
+        : severity === "warning"
+        ? "#fbbf24"
+        : "#14b8a6"};
+
+  strong {
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0.4rem 0;
+    font-size: 0.9rem;
+  }
+
+  small {
+    color: #cbd5e1;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
 `;
 
-export const ProgressBarContainer = styled.div`
-  max-width: 600px;
-  margin: 0 auto 1.5rem auto;
-  text-align: center;
-`;
-
-export const ProgressTrack = styled.div`
-  background: #1e293b;
-  height: 10px;
-  border-radius: 10px;
-  overflow: hidden;
-`;
-
-export const ProgressFill = styled.div`
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-  height: 100%;
-  border-radius: 10px;
-`;
-
-export const StepIndicator = styled.div<{ active?: boolean }>`
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: ${({ active }) => (active ? "#3b82f6" : "#334155")};
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-`;
-
-// 🔹 Stepper Container Style
+// Stepper Styles
 export const StepperContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.8rem;
-  margin: 2rem auto;
-  flex-wrap: wrap;
-  max-width: 600px;
+  margin-bottom: 2rem;
+  position: relative;
+  gap: 0;
+
+  @media (max-width: 768px) {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 0.5rem;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+  }
 `;
 
 export const StepWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   position: relative;
+  flex-shrink: 0;
 `;
 
 export const StepCircle = styled.div<{ active?: boolean; completed?: boolean }>`
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: ${({ completed, active }) =>
-    completed ? "#6d28d9" : active ? "#7c3aed" : "#1e293b"};
-  color: white;
+    completed ? "#8B5CF6" : active ? "#7C3AED" : "transparent"};
+  border: 3px solid ${({ completed, active }) =>
+    completed ? "#8B5CF6" : active ? "#7C3AED" : "#3F3F46"};
+  color: #fff;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   z-index: 2;
   transition: all 0.3s ease;
+  min-width: 32px;
 
-  &:hover {
-    transform: scale(1.05);
+  @media (max-width: 768px) {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
   }
 `;
 
 export const StepLine = styled.div<{ completed?: boolean }>`
-  position: absolute;
-  top: 14px;
-  left: 100%;
-  width: 50px;
+  width: 60px;
   height: 3px;
-  background: ${({ completed }) => (completed ? "#7c3aed" : "#334155")};
-  z-index: 1;
+  background: ${({ completed }) => (completed ? "#8B5CF6" : "#3F3F46")};
+  margin: 0 -2px;
   transition: background 0.3s ease;
 
-  @media (max-width: 600px) {
-    width: 30px;
+  @media (max-width: 768px) {
+    width: 35px;
   }
 `;
 
 export const StepLabel = styled.span<{ active?: boolean }>`
-  margin-top: 0.5rem;
-  color: ${({ active }) => (active ? "#a78bfa" : "#94a3b8")};
-  font-size: 0.85rem;
-  font-weight: ${({ active }) => (active ? "600" : "500")};
+  display: none;
 `;

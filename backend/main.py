@@ -1,55 +1,25 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from models import MaintenanceInput
+from app.routers import recommend_router
 
-app = FastAPI(
-    title="Sistem Pakar Preventive Maintenance",
-    description="Memberikan rekomendasi maintenance harian dan mingguan berdasarkan kondisi mesin",
-    version="1.0"
-)
+app = FastAPI(title="Lathe PM Expert System (Haas ST-20)")
 
-# 🧩 Tambahkan ini agar React bisa akses API
+# ✅ Tambahkan konfigurasi CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["http://localhost:5173"], 
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["*"], 
     allow_headers=["*"],
 )
 
+# Include router dari folder routers
+app.include_router(recommend_router.router)
+
 @app.get("/")
-def home():
-    return {"message": "Sistem Pakar Preventive Maintenance aktif 🚀"}
+def root():
+    return {"msg": "Lathe PM Expert System (Haas ST-20) - send POST /recommend"}
 
-@app.post("/evaluate")
-def evaluate_maintenance(data: MaintenanceInput):
-    recommendations = []
-
-    # --- Pemeriksaan Harian ---
-    if data.chuck_condition.lower() != "baik":
-        recommendations.append("Periksa kondisi chuck — bersihkan dan pastikan kuncian tidak aus.")
-
-    if data.tailstock_condition.lower() != "baik":
-        recommendations.append("Periksa tailstock — lakukan pelumasan dan pastikan sejajar dengan sumbu spindle.")
-
-    if data.spindle_vibration.lower() == "ada getaran":
-        recommendations.append("Periksa spindle — hentikan operasi dan lakukan balancing atau ganti bearing.")
-
-    if data.lubrication_status.lower() != "lancar":
-        recommendations.append("Cek sistem pelumasan — pastikan jalur oli tidak tersumbat.")
-
-    # --- Pemeriksaan Mingguan ---
-    if data.oil_pressure and data.oil_pressure.lower() != "normal":
-        recommendations.append("Periksa tekanan oli hidrolik — isi atau ganti oli jika tekanan tidak stabil.")
-
-    if data.coolant_filter and data.coolant_filter.lower() == "kotor":
-        recommendations.append("Bersihkan filter pendingin (coolant filter) untuk menjaga sirkulasi cairan.")
-
-    # --- Default jika semua baik ---
-    if not recommendations:
-        recommendations.append("Semua sistem dalam kondisi baik. Lanjutkan operasional normal ✅")
-
-    return {
-        "input": data,
-        "rekomendasi": recommendations
-    }
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
